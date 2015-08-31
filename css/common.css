@@ -1,0 +1,35 @@
+body{
+  background-color: black;
+  color: white;
+}
+#title{
+  text-align: center;
+  font-size: 20px;
+}
+#status{
+  color: orange;
+}
+#saveDir{
+  display: none;
+}
+#pageUrl{
+  width: 220px;
+}
+#pageNumber{
+  width: 30px;
+  margin-left: 5px;
+}
+.widget{
+  font-size: 15px;
+}
+.formLine{
+  width: 80%;
+  margin: 10px auto;
+  clear: both;
+}
+.formValue{
+  float: right;
+}
+.formAction{
+  float: right;
+}

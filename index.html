@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>bilisnap</title>
+    <link href="css/common.css" rel="stylesheet">
+  </head>
+  <body>
+    <p id='title'>bilisnap - 哔哩哔哩视频下载器</p>
+    <form id='inputForm'>
+      <div class='formLine'>
+        <label id='pageUrlLabel' for='pageUrl' class='formLabel widget'>视频URL:</label>
+        <input id='pageNumber' type="number" class='formValue' value='1' min='1'/>
+        <input id='pageUrl' class='formValue' type='text'
+               placeholder="http://www.bilibili.com/video/av号/"></input>
+      </div>
+      <div class='formLine'>
+        <label id='saveDirLabel' for='saveDir' class='formLabel widget'>保存地址:</label>
+        <label id="saveDirPreview" class='widget'></label>
+
+        <button id='saveDirBtn' class='formValue widget'>选择下载目录</button>
+        <input type="file" id="saveDir" multiple webkitdirectory />
+      </div>
+      <div class='formLine'>
+        <label id='status' class='widget'>...下载状态...</label>
+        <button id='download' class='formAction widget'>下载</button>
+      </div>
+    </form>
+  </body>
+  <script src="./js/bilisnap.js"></script>
+</html>
