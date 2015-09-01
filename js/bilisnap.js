@@ -4,6 +4,7 @@
 window.$ = window.jQuery = require('./js/vendor/jquery-2.1.4.min.js');
 
 var bilidown = require('bilidown');
+var biliass = require('biliass');
 
 // 页面元素初始化
 $(function(){
@@ -23,6 +24,7 @@ $(function(){
 
   // 下载按钮
   $('#download').on('click', function(e){
+    var downloadBtn = $('#download');
     e.preventDefault();
 
     var pageUrl = $('#pageUrl').val();
@@ -30,13 +32,31 @@ $(function(){
     var saveDir = $('#saveDir').data('dirPath');
 
     // 下载过程中下载按钮禁用
-    $(this).attr("disabled",　true);
+    downloadBtn.attr('disabled','disabled');
 
+    // 下载视频
     downloadVideo(pageUrl, pageNumber, saveDir, function(err){
       if(err) return console.error(err);
+      // 下载弹幕
+      downloadAss(pageUrl, pageNumber, saveDir, function(err){
+        if(err) return console.error(err);
+
+        // 下载完成，恢复下载按钮
+        downloadBtn.removeAttr('disabled');
+      });
     });
   });
 });
+
+// 下载弹幕
+function downloadAss(pageUrl, pageNumber, saveDir, callback){
+  biliass.downloadAss(pageUrl, pageNumber, saveDir, function(err){
+    if(err) return console.error(err);
+    displayStatus('字幕下载完成');
+
+    callback(null);
+  });
+}
 
 // 下载视频
 function downloadVideo(pageUrl, pageNumber, saveDir, callback){
