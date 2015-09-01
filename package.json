@@ -10,6 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "biliass": "^1.3.2",
-    "bilidown": "^1.2.3"
+    "bilidown": "^1.3.0"
   }
 }

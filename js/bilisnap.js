@@ -5,7 +5,7 @@ window.$ = window.jQuery = require('./js/vendor/jquery-2.1.4.min.js');
 
 var bilidown = require('bilidown');
 
-// 初始化
+// 页面元素初始化
 $(function(){
   // 面上的选择下载目录按钮
   $('#saveDirBtn').on('click', function(e){
@@ -26,8 +26,11 @@ $(function(){
     e.preventDefault();
 
     var pageUrl = $('#pageUrl').val();
-    var pageNumber = $('#pageNumber').val();
+    var pageNumber = parseInt($('#pageNumber').val());
     var saveDir = $('#saveDir').data('dirPath');
+
+    // 下载过程中下载按钮禁用
+    $(this).attr("disabled",　true);
 
     downloadVideo(pageUrl, pageNumber, saveDir, function(err){
       if(err) return console.error(err);
@@ -38,9 +41,30 @@ $(function(){
 // 下载视频
 function downloadVideo(pageUrl, pageNumber, saveDir, callback){
   // 调用bilidown模块下载视频
-  bilidown.downloadPageVideo(pageUrl, pageNumber, saveDir, function(err){
-    if(err) return callback(err);
 
-    callback(null);
-  });
+  // 要显示的文字
+  var sentence = '';
+  // 调用bilidown模块下载视频
+  bilidown.downloadPageVideo(pageUrl, pageNumber, saveDir)
+    .on('downloading', function(progress){
+      var current = progress.current;
+      var total = progress.total;
+
+      // 显示新的进度语句
+      sentence = '视频已下载：'+(current/total*100).toFixed(2)+'%';
+      displayStatus(sentence);
+    })
+    .on('end', function(){
+      sentence = '视频下载完成';
+      displayStatus(sentence);
+
+      callback(null);
+    })
+    .on('error', function(err){
+      callback(err);
+    });
+}
+
+function displayStatus(statusMsg){
+  $('#status').text(statusMsg);
 }
